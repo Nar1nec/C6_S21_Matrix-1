@@ -1,0 +1,69 @@
+#include <check.h>
+#include <stdlib.h>
+
+#include "s21_matrix.h"
+
+#test mult1
+  matrix_t matrix1, matrix2, etalon, result;
+  ck_assert_uint_eq(s21_create_matrix(3, 3, &matrix1), 0);
+  ck_assert_uint_eq(s21_create_matrix(3, 3, &matrix2), 0);
+  ck_assert_uint_eq(s21_create_matrix(3, 3, &etalon), 0);
+
+  double in_mat1[10][10] = {{1.5, 2.5, 4.5}, {3, 5, 6}, {2, 7, 9}};
+  double in_mat2[10][10] = {{1.5, 4, 2}, {0.5, 3, 10}, {4.5, 3, 2}};
+  double in_etalon[10][10] = {{23.75, 27, 37}, {34, 45, 68}, {47, 56, 92}};
+
+  set_matrix(&matrix1, in_mat1);
+  set_matrix(&matrix2, in_mat2);
+  set_matrix(&etalon, in_etalon);
+
+  ck_assert_uint_eq(s21_mult_matrix(&matrix1, &matrix2, &result), 0);
+  ck_assert_uint_eq(s21_eq_matrix(&result, &etalon), SUCCESS);
+
+  s21_remove_matrix(&matrix1);
+  s21_remove_matrix(&matrix2);
+  s21_remove_matrix(&etalon);
+  s21_remove_matrix(&result);
+
+
+#test mult2
+  matrix_t matrix1, matrix2, etalon, result;
+  ck_assert_uint_eq(s21_create_matrix(5, 3, &matrix1), 0);
+  ck_assert_uint_eq(s21_create_matrix(3, 2, &matrix2), 0);
+  ck_assert_uint_eq(s21_create_matrix(5, 2, &etalon), 0);
+
+  double in_mat1[10][10] = {
+      {1.5, 2.5, 4.5}, {3, 5, 6}, {13, 15, -6}, {1, 8, 7}, {6, 9, 1}};
+  double in_mat2[10][10] = {{1.5, 4}, {0.5, 3}, {4.5, 3}};
+  double in_etalon[10][10] = {
+      {23.75, 27}, {34, 45}, {0, 79}, {37, 49}, {18, 54}};
+
+  set_matrix(&matrix1, in_mat1);
+  set_matrix(&matrix2, in_mat2);
+  set_matrix(&etalon, in_etalon);
+
+  ck_assert_uint_eq(s21_mult_matrix(&matrix1, &matrix2, &result), 0);
+  ck_assert_uint_eq(s21_eq_matrix(&result, &etalon), SUCCESS);
+
+  s21_remove_matrix(&matrix1);
+  s21_remove_matrix(&matrix2);
+  s21_remove_matrix(&etalon);
+  s21_remove_matrix(&result);
+
+
+#test mult3
+  matrix_t matrix1, matrix2, result;
+  ck_assert_uint_eq(s21_create_matrix(5, 3, &matrix1), 0);
+  ck_assert_uint_eq(s21_create_matrix(2, 2, &matrix2), 0);
+
+  double in_mat1[10][10] = {
+      {1.5, 2.5, 4.5}, {3, 5, 6}, {13, 15, -6}, {1, 8, 7}, {6, 9, 1}};
+  double in_mat2[10][10] = {{1.5, 4}, {0.5, 3}, {4.5, 3}};
+
+  set_matrix(&matrix1, in_mat1);
+  set_matrix(&matrix2, in_mat2);
+
+  ck_assert_uint_eq(s21_mult_matrix(&matrix1, &matrix2, &result), 2);
+
+  s21_remove_matrix(&matrix1);
+  s21_remove_matrix(&matrix2);

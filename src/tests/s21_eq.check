@@ -1,0 +1,84 @@
+#include <check.h>
+#include <stdlib.h>
+
+#include "s21_matrix.h"
+
+#test eq0
+  matrix_t matrix1, matrix2;
+  ck_assert_uint_eq(s21_create_matrix(2, 3, &matrix1), 0);
+  ck_assert_uint_eq(s21_create_matrix(2, 3, &matrix2), 0);
+
+  double in_mat1[10][10] = {{1.5123456, 2.5, 4.5}, {4.5, 5.5, 8.5}};
+  double in_mat2[10][10] = {{1.5123456, 2.5, 4.5}, {4.5, 5.5, 8.5}};
+  set_matrix(&matrix1, in_mat1);
+  set_matrix(&matrix2, in_mat2);
+
+  ck_assert_uint_eq(s21_eq_matrix(&matrix1, &matrix2), SUCCESS);
+  s21_remove_matrix(&matrix1);
+  s21_remove_matrix(&matrix2);
+
+
+#test eq1
+    matrix_t matrix1, matrix2;
+    ck_assert_uint_eq(s21_create_matrix(2, 3, &matrix1), 0);
+    ck_assert_uint_eq(s21_create_matrix(2, 3, &matrix2), 0);
+
+    double in_mat1[10][10] = {{1.5, 0.512344578, 4.5}, {4.5, 5.5, 8.5}};
+    double in_mat2[10][10] = {{1.5, 0.512345578, 4.5}, {4.5, 5.5, 8.5}};
+    set_matrix(&matrix1, in_mat1);
+    set_matrix(&matrix2, in_mat2);
+
+    ck_assert_uint_eq(s21_eq_matrix(&matrix1, &matrix2), FAILURE);
+    s21_remove_matrix(&matrix1);
+    s21_remove_matrix(&matrix2);
+
+#test eq2
+  matrix_t matrix1, matrix2;
+  ck_assert_uint_eq(s21_create_matrix(2, 3, &matrix1), 0);
+  ck_assert_uint_eq(s21_create_matrix(1, 3, &matrix2), 0);
+
+  double in_mat1[10][10] = {{1.5, 2.5, 4.5}, {4.5, 5.5, 8.5}};
+  double in_mat2[10][10] = {{1.5, 0.5, 4.5}};
+  set_matrix(&matrix1, in_mat1);
+  set_matrix(&matrix2, in_mat2);
+
+  ck_assert_uint_eq(s21_eq_matrix(&matrix1, &matrix2), FAILURE);
+  s21_remove_matrix(&matrix1);
+  s21_remove_matrix(&matrix2);
+
+#test eq3
+  matrix_t matrix1, matrix2;
+  ck_assert_uint_eq(s21_create_matrix(1, 3, &matrix1), 0);
+  ck_assert_uint_eq(s21_create_matrix(3, 1, &matrix2), 0);
+
+  double in_mat1[10][10] = {{1.5, 2.5, 4.5}};
+  double in_mat2[10][10] = {{1.5}, {0.5}, {4.5}};
+  set_matrix(&matrix1, in_mat1);
+  set_matrix(&matrix2, in_mat2);
+
+  ck_assert_uint_eq(s21_eq_matrix(&matrix1, &matrix2), FAILURE);
+  s21_remove_matrix(&matrix1);
+  s21_remove_matrix(&matrix2);
+
+#test eq4
+  matrix_t matrix1, matrix2;
+  ck_assert_uint_eq(s21_create_matrix(1, 1, &matrix1), 0);
+  ck_assert_uint_eq(s21_create_matrix(1, 1, &matrix2), 0);
+
+  double in_mat1[10][10] = {{1.5}};
+  double in_mat2[10][10] = {{1.5}};
+  set_matrix(&matrix1, in_mat1);
+  set_matrix(&matrix2, in_mat2);
+
+  ck_assert_uint_eq(s21_eq_matrix(&matrix1, &matrix2), SUCCESS);
+  s21_remove_matrix(&matrix1);
+  s21_remove_matrix(&matrix2);
+
+#test eq5
+  matrix_t matrix1, matrix2;
+  ck_assert_uint_eq(s21_create_matrix(10, 15, &matrix1), 0);
+  ck_assert_uint_eq(s21_create_matrix(10, 15, &matrix2), 0);
+
+  ck_assert_uint_eq(s21_eq_matrix(&matrix1, &matrix2), SUCCESS);
+  s21_remove_matrix(&matrix1);
+  s21_remove_matrix(&matrix2);

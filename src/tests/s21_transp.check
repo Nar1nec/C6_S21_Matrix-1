@@ -1,0 +1,43 @@
+#include <check.h>
+#include <stdlib.h>
+
+#include "s21_matrix.h"
+
+#test transp0
+  matrix_t matrix1, etalon, result;
+  ck_assert_uint_eq(s21_create_matrix(5, 3, &matrix1), 0);
+  ck_assert_uint_eq(s21_create_matrix(3, 5, &etalon), 0);
+
+  double in_mat1[10][10] = {
+      {1.5, 2.5, 4.5}, {3, 5, 6}, {13, 15, -6}, {1, 8, 7}, {6, 9, 1}};
+  double in_etalon[10][10] = {
+      {1.5, 3, 13, 1, 6}, {2.5, 5, 15, 8, 9}, {4.5, 6, -6, 7, 1}};
+
+  set_matrix(&matrix1, in_mat1);
+  set_matrix(&etalon, in_etalon);
+
+  ck_assert_uint_eq(s21_transpose(&matrix1, &result), 0);
+  ck_assert_uint_eq(s21_eq_matrix(&result, &etalon), SUCCESS);
+
+  s21_remove_matrix(&matrix1);
+  s21_remove_matrix(&etalon);
+  s21_remove_matrix(&result);
+
+
+#test transp1
+  matrix_t matrix1, etalon, result;
+  ck_assert_uint_eq(s21_create_matrix(5, 1, &matrix1), 0);
+  ck_assert_uint_eq(s21_create_matrix(1, 5, &etalon), 0);
+
+  double in_mat1[10][10] = {{1.5}, {3}, {13}, {1}, {6}};
+  double in_etalon[10][10] = {{1.5, 3, 13, 1, 6}};
+
+  set_matrix(&matrix1, in_mat1);
+  set_matrix(&etalon, in_etalon);
+
+  ck_assert_uint_eq(s21_transpose(&matrix1, &result), 0);
+  ck_assert_uint_eq(s21_eq_matrix(&result, &etalon), SUCCESS);
+
+  s21_remove_matrix(&matrix1);
+  s21_remove_matrix(&etalon);
+  s21_remove_matrix(&result);

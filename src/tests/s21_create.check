@@ -1,0 +1,21 @@
+#include <check.h>
+#include <stdlib.h>
+
+#include "s21_matrix.h"
+
+#test cr1
+  matrix_t matrix;
+  ck_assert_uint_eq(s21_create_matrix(3, 4, &matrix), 0);
+  s21_remove_matrix(&matrix);
+
+#test cr2
+  matrix_t matrix;
+  ck_assert_uint_eq(s21_create_matrix(0, 4, &matrix), 1);
+
+#test cr3
+  matrix_t matrix;
+  ck_assert_uint_eq(s21_create_matrix(3, -2, &matrix), 1);
+
+#test cr4
+  matrix_t matrix;
+  ck_assert_uint_eq(s21_create_matrix(0, 0, &matrix), 1);

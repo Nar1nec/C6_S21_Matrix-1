@@ -1,0 +1,143 @@
+#include <check.h>
+#include <stdlib.h>
+#include <math.h>
+
+#include "s21_matrix.h"
+
+#test deter1
+  matrix_t matrix1;
+  ck_assert_uint_eq(s21_create_matrix(5, 5, &matrix1), 0);
+
+  double in_mat1[10][10] = {{1.5, 2.5, 4.5, 2, 8},
+                            {3, 5, 6, -2, 0},
+                            {13, 15, -6, 2, 9},
+                            {1, 8, 7, 12, -23},
+                            {6, 9, 1, 10, 0}};
+
+  set_matrix(&matrix1, in_mat1);
+
+  double result;
+  double etalon = 20006;
+
+  ck_assert_uint_eq(s21_determinant(&matrix1, &result), 0);
+  ck_assert_float_eq_tol(result, etalon, EPS);
+
+  s21_remove_matrix(&matrix1);
+
+#test deter2
+  matrix_t matrix1;
+  ck_assert_uint_eq(s21_create_matrix(3, 3, &matrix1), 0);
+
+  double in_mat1[10][10] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+
+  set_matrix(&matrix1, in_mat1);
+
+  double result;
+  double etalon = 0;
+
+  ck_assert_uint_eq(s21_determinant(&matrix1, &result), 0);
+  ck_assert_float_eq_tol(result, etalon, EPS);
+
+  s21_remove_matrix(&matrix1);
+
+#test deter3
+  matrix_t matrix1;
+  ck_assert_uint_eq(s21_create_matrix(2, 3, &matrix1), 0);
+
+  double in_mat1[10][10] = {{1, 2, 3}, {4, 5, 6}};
+
+  set_matrix(&matrix1, in_mat1);
+
+  double result;
+  ck_assert_uint_eq(s21_determinant(&matrix1, &result), 2);
+
+  s21_remove_matrix(&matrix1);
+
+
+#test deter4
+  matrix_t matrix1;
+  ck_assert_uint_eq(s21_create_matrix(2, 2, &matrix1), 0);
+
+  double in_mat1[10][10] = {{1, 2}, {4, 5}};
+
+  set_matrix(&matrix1, in_mat1);
+
+  double result;
+  double etalon = -3;
+
+  ck_assert_uint_eq(s21_determinant(&matrix1, &result), 0);
+  ck_assert_float_eq_tol(result, etalon, EPS);
+
+  s21_remove_matrix(&matrix1);
+
+
+#test deter5
+  matrix_t matrix1;
+  ck_assert_uint_eq(s21_create_matrix(1, 1, &matrix1), 0);
+
+  double in_mat1[10][10] = {{666}};
+
+  set_matrix(&matrix1, in_mat1);
+
+  double result;
+  double etalon = 666;
+
+  ck_assert_uint_eq(s21_determinant(&matrix1, &result), 0);
+  ck_assert_float_eq_tol(result, etalon, EPS);
+
+  s21_remove_matrix(&matrix1);
+
+#test deter6
+  matrix_t matrix1;
+  ck_assert_uint_eq(s21_create_matrix(5, 5, &matrix1), 0);
+
+  double in_mat1[10][10] = {{1.5, 2.5, 4.5, 2, 0},
+                            {3, 0, 6, -2, 0},
+                            {13, 15, -6, 0, 9},
+                            {1, 0, 7, 12, -23},
+                            {6, 9, 1, 0, 0}};
+
+  set_matrix(&matrix1, in_mat1);
+
+  double result;
+  double etalon = -33416;
+
+  ck_assert_uint_eq(s21_determinant(&matrix1, &result), 0);
+  ck_assert_float_eq_tol(result, etalon, EPS);
+
+  s21_remove_matrix(&matrix1);
+
+#test deter7
+  matrix_t matrix1;
+  ck_assert_uint_eq(s21_create_matrix(6, 6, &matrix1), 0);
+
+  double in_mat1[10][10] = {{1.5, 2.5, 4.5, 2, 0, 8}, {3, 0, 6, -2, 0, 7},
+                            {13, 15, -6, 0, 9, 5},    {1, 0, 7, 12, -23, 3},
+                            {6, 9, 1, 0, 0, 2},       {4, 7, -3, -2, 4, 8}};
+
+  set_matrix(&matrix1, in_mat1);
+
+  double result;
+  double etalon = -344160;
+
+  ck_assert_uint_eq(s21_determinant(&matrix1, &result), 0);
+  ck_assert_float_eq_tol(result, etalon, EPS);
+
+  s21_remove_matrix(&matrix1);
+
+#test deter8
+  matrix_t matrix1;
+  ck_assert_uint_eq(s21_create_matrix(4, 4, &matrix1), 0);
+
+  double in_mat1[10][10] = {
+      {1, 2, 3, 4}, {4, 0, 0, 3}, {0, 3, 3, 1}, {0, 7, 2, 6}};
+
+  set_matrix(&matrix1, in_mat1);
+
+  double result;
+  double etalon = 199;
+
+  ck_assert_uint_eq(s21_determinant(&matrix1, &result), 0);
+  ck_assert_float_eq_tol(result, etalon, EPS);
+
+  s21_remove_matrix(&matrix1);

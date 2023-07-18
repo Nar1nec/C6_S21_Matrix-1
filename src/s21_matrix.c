@@ -138,14 +138,14 @@ int s21_transpose(matrix_t *A, matrix_t *result) {
   return answer;
 }
 
-void find_minor(int excluded_r_с, matrix_t *result, matrix_t *minor) {
+void find_minor(int excluded_c,int excluded_r, matrix_t *result, matrix_t *minor) {
   s21_create_matrix(result->columns - 1, result->rows - 1, minor);
   int minor_i = 0;
   for (int i = 0; i < result->rows; i++) {
-    if (i == excluded_r_с) continue;
+    if (i == excluded_r) continue;
     int minor_j = 0;
     for (int j = 0; j < result->columns; j++) {
-      if (j == excluded_r_с) continue;
+      if (j == excluded_c) continue;
       minor->matrix[minor_i][minor_j] = result->matrix[i][j];
       minor_j++;
     }
@@ -193,15 +193,14 @@ double calc_determinant(matrix_t* result){
   } else if (result->rows == 2) {
     det = result->matrix[0][0] * result->matrix[1][1] - result->matrix[0][1] * result->matrix[1][0];
   } else if(result->rows >= 3){
-    double sign = 1.0;
-  for(int i = 0; i < result->columns; i++){
+  for(int i = 0; i < result->rows; i++){
     for (int j = 0; j < result->columns; j++) {
       matrix_t minor_matrix;
-      find_minor(j, result, &minor_matrix);
-      det += sign * result->matrix[0][j] * calc_determinant(&minor_matrix) * pow(-1, i + j);
-      sign = -sign;
+      find_minor(i, j, result, &minor_matrix);
+      det += result->matrix[i][j] * calc_determinant(&minor_matrix) * pow(-1, i + j);
       s21_remove_matrix(&minor_matrix);
     }
+    return det;
   }
   }
 

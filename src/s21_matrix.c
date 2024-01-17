@@ -153,38 +153,6 @@ void find_minor(int excluded_c,int excluded_r, matrix_t *result, matrix_t *minor
   }
 }
 
-// int s21_calc_complements(matrix_t *A, matrix_t *result) {
-//   if (A->rows == A->columns) {
-//     int answer = s21_create_matrix(A->columns, A->rows, result);
-//     if (!answer) {
-//       if (A->columns == 1) {
-//         result->matrix = A->matrix;
-//       } else if (A->columns == 2) {
-//         for (int i = 0; i < A->rows; i++) {
-//           for (int j = 0; k < A->columns; j++) {
-//             matrix_t minor_matrix;
-//             find_minor(A->rows, result, &minor_matrix);
-//             result->matrix[i][j] = minor_matrix.matrix[0][0] * pow(-1, i + j);
-//             s21_remove_matrix(&minor_matrix);
-//           }
-//         }
-//       } else if(A->columns >= 3){
-//         for (int i = 0; i < A->rows; i++) {
-//           for (int j = 0; k < A->columns; j++) {
-//             matrix_t minor_matrix;
-//             find_minor(A->rows, result, &minor_matrix);
-//             result->matrix[i][j] = minor_matrix.matrix[0][0] * pow(-1, i + j);
-//             s21_remove_matrix(&minor_matrix);
-//           }
-//         }
-//       }
-//     }
-//   } else {
-//     answer = ERROR_CALCULATION;
-//   }
-//   return answer;
-// }
-
 double calc_determinant(matrix_t* result){
   double det = 0.0;
 
@@ -216,25 +184,3 @@ int s21_determinant(matrix_t *A, double *result){
   }
   return answer;
 }
-
-// int just_determinant(matrix_t *A) {
-//   double summ = 0;
-//   if (A->rows == 1) summ = A->matrix[0][0];
-//   if (A->rows == 2) {
-//     summ =
-//         A->matrix[0][0] * A->matrix[1][1] - A->matrix[0][1] *
-//         A->matrix[1][0];
-//   }
-//   if (A->rows >= 3) {
-//     fi(A->rows) {
-//       fj(A->columns) {
-//         matrix_t minor;
-//         select_minor_matrix(A, &minor, i, j);
-//         summ += A->matrix[i][j] * pow(-1, i + j) * just_determinant(&minor);
-//         s21_remove_matrix(&minor);
-//       }
-//       return summ;
-//     }
-//   }
-//   return summ;
-// }
